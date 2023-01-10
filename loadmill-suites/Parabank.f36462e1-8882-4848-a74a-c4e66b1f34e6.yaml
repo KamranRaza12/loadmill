@@ -1,0 +1,95 @@
+conf:
+  meta:
+    description: Parabank
+  useCookies: true
+  cookiesScope: Suite
+  parameters:
+    - origin_1: https://parabank.parasoft.com
+    - customer_username_in_request_body_1: kam@25
+    - customer_phoneNumber_in_request_body_1: "123456789"
+    - customer_password_in_request_body_1: "123456789"
+    - repeatedPassword_in_request_body_1: "123456789"
+    - username_in_request_body_1: kam@25
+    - password_in_request_body_1: "123456789"
+  loginFlow: []
+  authenticationHeaders: []
+  parametersScope: SUITE
+flows:
+  - id: fc2347e1-ced7-425a-a580-ef8598a50678
+    order: 0
+    conf:
+      meta:
+        description: Register
+      requests:
+        
+        - description: The browser submits the registration form
+          method: POST
+          url: ${origin_1}/parabank/register.htm
+          postData:
+            text: ""
+            mimeType: application/x-www-form-urlencoded
+            params:
+              - name: customer.firstName
+                value: k
+              - name: customer.lastName
+                value: r
+              - name: customer.address.street
+                value: SIWAN
+              - name: customer.address.city
+                value: PATNA
+              - name: customer.address.state
+                value: BIHAR
+              - name: customer.address.zipCode
+                value: "110044"
+              - name: customer.phoneNumber
+                value: ${__encode_url(customer_phoneNumber_in_request_body_1)}
+              - name: customer.ssn
+                value: "111111111"
+              - name: customer.username
+                value: ${__encode_url(customer_username_in_request_body_1)}
+              - name: customer.password
+                value: ${__encode_url(customer_password_in_request_body_1)}
+              - name: repeatedPassword
+                value: ${__encode_url(repeatedPassword_in_request_body_1)}
+          headers:
+            - referer: https://parabank.parasoft.com/parabank/register.htm
+          assert: []
+
+    runInCi: false
+  - id: c7c4b21e-535e-48c1-8f7d-c0404378e6e5
+    order: 1
+    conf:
+      meta:
+        description: Login
+      requests:
+        
+        - description: Submit the login form
+          method: POST
+          url: ${origin_1}/parabank/login.htm
+          postData:
+            text: ""
+            mimeType: application/x-www-form-urlencoded
+            params:
+              - name: username
+                value: ${__encode_url(username_in_request_body_1)}
+              - name: password
+                value: ${__encode_url(password_in_request_body_1)}
+          headers:
+            - referer: https://parabank.parasoft.com/parabank/index.htm?ConnType=JDBC
+
+        - description: Load the accounts page
+          method: GET
+          url: ${origin_1}/parabank/services_proxy/bank/customers/12878/accounts
+          headers:
+            - referer: https://parabank.parasoft.com/parabank/overview.htm
+
+        - description: Load the login page
+          method: GET
+          url: ${origin_1}/parabank/index.htm?ConnType=JDBC
+          headers:
+            - referer: https://parabank.parasoft.com/parabank/activity.htm?id=14010
+
+    runInCi: true
+dependencies:
+  login:
+    id: 9b4b129a-a529-42f4-a371-371c0f7c313d
