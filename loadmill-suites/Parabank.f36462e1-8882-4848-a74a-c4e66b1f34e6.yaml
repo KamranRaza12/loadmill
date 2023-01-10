@@ -88,6 +88,12 @@ flows:
           url: ${origin_1}/parabank/index.htm?ConnType=JDBC
           headers:
             - referer: https://parabank.parasoft.com/parabank/activity.htm?id=14010
+           
+        - description: Load the login page
+          method: GET
+          url: ${origin_1}/parabank/index.htm?ConnType=JDBC
+          headers:
+            - referer: https://parabank.parasoft.com/parabank/activity.htm?id=14010
 
     runInCi: true
 dependencies:
