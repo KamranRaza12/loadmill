@@ -1,0 +1,101 @@
+conf:
+  meta:
+    description: POC
+  parameters:
+    - origin_1: https://petstore.swagger.io
+    - origin_2: https://nxtgenaiacademy.com
+  useCookies: true
+  cookiesScope: Suite
+  loginFlow: []
+  authenticationHeaders: []
+  parametersScope: SUITE
+flows:
+  - id: 0e76413e-a552-4158-8488-2681b1c351dc
+    order: 0
+    conf:
+      meta:
+        description: NxtGenAi
+      requests:
+        
+        - description: The browser submits the form data to the server
+          method: POST
+          url: ${origin_2}/demo-site/
+          postFormData:
+            - name: form_id
+              value: "1"
+            - name: vfb-5
+              value: ${FirstName}
+            - name: vfb-7
+              value: ${LastName}
+            - name: vfb-31
+              value: Male
+            - name: vfb-13[address]
+              value: Siwna
+            - name: vfb-13[address-2]
+              value: non
+            - name: vfb-13[city]
+              value: a
+            - name: vfb-13[state]
+              value: ""
+            - name: vfb-13[zip]
+              value: Alpha
+            - name: vfb-13[country]
+              value: Bhutan
+            - name: vfb-14
+              value: demo@gmail.com
+            - name: vfb-18
+              value: 01/24/2023
+            - name: vfb-16[hour]
+              value: "03"
+            - name: vfb-16[min]
+              value: "20"
+            - name: vfb-19
+              value: "1020304050"
+            - name: vfb-20[]
+              value: Selenium WebDriver
+            - name: vfb-20[]
+              value: UFT
+            - name: vfb-23
+              value: Kya hai ye
+            - name: _vfb-secret
+              value: vfb-3
+            - name: vfb-3
+              value: "99"
+            - name: vfb-spam
+              value: ""
+            - name: vfb-submit
+              value: Submit
+            - name: _wp_http_referer
+              value: /demo-site/
+          headers:
+            - referer: https://nxtgenaiacademy.com/demo-site/
+          extract:
+            - meta_name_viewport_in_response_body_1:
+                jQuery:
+                  query: meta[name="viewport"]
+                  attr: content
+            - meta_name_robots_in_response_body_1:
+                jQuery:
+                  query: meta[name="robots"]
+                  attr: content
+            - meta_name_generator_in_response_body_1:
+                jQuery:
+                  query: meta[name="generator"]
+                  attr: content
+          assert:
+            - check: meta_name_viewport_in_response_body_1
+            - check: meta_name_robots_in_response_body_1
+            - check: meta_name_generator_in_response_body_1
+
+        - description: The browser requests the root page
+          method: GET
+          url: ${origin_2}/
+          headers:
+            - referer: https://nxtgenaiacademy.com/demo-site/
+
+      parameterPools:
+        - c854c2ab-3f8e-4d40-b394-5ead686109b6
+    runInCi: true
+dependencies:
+  login:
+    id: f7e9886c-ff16-4ff5-91d7-bc1c95f5f475
