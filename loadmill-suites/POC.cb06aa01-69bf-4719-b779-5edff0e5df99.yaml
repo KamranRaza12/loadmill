@@ -55,7 +55,7 @@ flows:
             - name: vfb-20[]
               value: UFT
             - name: vfb-23
-              value: Kya hai ye
+              value: what?
             - name: _vfb-secret
               value: vfb-3
             - name: vfb-3
@@ -86,6 +86,9 @@ flows:
             - check: meta_name_robots_in_response_body_1
             - check: meta_name_generator_in_response_body_1
 
+        - flowId: 231f6de0-2d77-457b-9bdb-fb23ab81a705
+          description: TestFlow
+
         - description: The browser requests the root page
           method: GET
           url: ${origin_2}/
@@ -98,3 +101,21 @@ flows:
 dependencies:
   login:
     id: f7e9886c-ff16-4ff5-91d7-bc1c95f5f475
+  flowsData:
+    - id: 231f6de0-2d77-457b-9bdb-fb23ab81a705
+      conf:
+        meta:
+          description: TestFlow
+        requests:
+          
+          - description: The browser requests the root page
+            method: GET
+            url: ${origin_2}/
+            headers:
+              - referer: https://nxtgenaiacademy.com/demo-site/
+
+        parameters:
+          - origin_2: https://nxtgenaiacademy.com
+        useCookies: true
+        authenticationHeaders: []
+      description: TestFlow
