@@ -1,11 +1,10 @@
 conf:
   meta:
     description: POC
-  parameters:
-    - origin_1: https://petstore.swagger.io
-    - origin_2: https://nxtgenaiacademy.com
   useCookies: true
   cookiesScope: Suite
+  parameters:
+    - origin_2: https://nxtgenaiacademy.com
   loginFlow: []
   authenticationHeaders: []
   parametersScope: SUITE
