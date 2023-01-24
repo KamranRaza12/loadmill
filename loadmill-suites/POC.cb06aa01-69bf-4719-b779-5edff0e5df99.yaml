@@ -96,7 +96,7 @@ flows:
             - referer: https://nxtgenaiacademy.com/demo-site/
 
       parameterPools:
-        - c854c2ab-3f8e-4d40-b394-5ead686109b6
+        - 599a9c1f-ba6c-4a95-9635-f60e779ae01b
     runInCi: true
 dependencies:
   login:
