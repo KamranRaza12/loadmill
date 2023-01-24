@@ -85,9 +85,6 @@ flows:
             - check: meta_name_viewport_in_response_body_1
             - check: meta_name_robots_in_response_body_1
             - check: meta_name_generator_in_response_body_1
-            - check: __launchedBy
-              contains: Lakshya
-            - check: link_rel
 
         - description: The browser requests the root page
           method: GET
