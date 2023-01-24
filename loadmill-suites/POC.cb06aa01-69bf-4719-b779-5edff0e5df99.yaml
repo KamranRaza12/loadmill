@@ -89,9 +89,6 @@ flows:
               contains: Lakshya
             - check: link_rel
 
-        - flowId: 231f6de0-2d77-457b-9bdb-fb23ab81a705
-          description: TestFlow
-
         - description: The browser requests the root page
           method: GET
           url: ${origin_2}/
@@ -148,27 +145,55 @@ flows:
       parameterPools:
         - d25c0417-7b34-4989-9d52-1a4b7e972899
     runInCi: true
+  - id: 75f91eca-0cb3-41ac-b293-60890c51d7fd
+    order: 2
+    conf:
+      meta:
+        description: SOAP
+      requests:
+        
+        - description: DigitToWords
+          method: POST
+          url: https://www.dataaccess.com/webservicesserver/NumberConversion.wso
+          postData:
+            text: >-
+              <?xml version="1.0" encoding="utf-8"?>
+
+              <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                <soap:Body>
+                  <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">
+                    <ubiNum>600</ubiNum>
+                  </NumberToWords>
+                </soap:Body>
+              </soap:Envelope>
+            mimeType: text/xml
+          assert:
+            - check: __responseBody
+              contains: six hundred
+
+        - description: ListLanguages
+          method: POST
+          url: http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso
+          postData:
+            text: >
+              <?xml version="1.0" encoding="utf-8"?>
+
+              <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                <soap:Body>
+                  <ListOfLanguagesByName xmlns="http://www.oorsprong.org/websamples.countryinfo">
+                  </ListOfLanguagesByName>
+                </soap:Body>
+              </soap:Envelope>
+            mimeType: text/xml
+          assert:
+            - check: __responseBody
+              contains: m:ListOfLanguagesByNameResult
+
+    runInCi: true
 dependencies:
   login:
     id: f7e9886c-ff16-4ff5-91d7-bc1c95f5f475
   flowsData:
-    - id: 231f6de0-2d77-457b-9bdb-fb23ab81a705
-      conf:
-        meta:
-          description: TestFlow
-        requests:
-          
-          - description: The browser requests the root page
-            method: GET
-            url: ${origin_2}/
-            headers:
-              - referer: https://nxtgenaiacademy.com/demo-site/
-
-        parameters:
-          - origin_2: https://nxtgenaiacademy.com
-        useCookies: true
-        authenticationHeaders: []
-      description: TestFlow
     - id: 42c06a2d-198c-404b-afb7-0ee7678bfe8e
       conf:
         meta:
