@@ -108,14 +108,8 @@ flows:
         description: NewEndToEnd
       requests:
         
-        - description: GET API
-          method: GET
-          url: https://thetestingworldapi.com/api/studentsDetails
-          extract:
-            - ID:
-                jsonPath: $[0]["id"]
-          assert:
-            - check: ID
+        - flowId: 42c06a2d-198c-404b-afb7-0ee7678bfe8e
+          description: Student Detail API
 
         - description: GET ID
           method: GET
@@ -153,7 +147,7 @@ flows:
 
       parameterPools:
         - d25c0417-7b34-4989-9d52-1a4b7e972899
-    runInCi: false
+    runInCi: true
 dependencies:
   login:
     id: f7e9886c-ff16-4ff5-91d7-bc1c95f5f475
@@ -175,3 +169,22 @@ dependencies:
         useCookies: true
         authenticationHeaders: []
       description: TestFlow
+    - id: 42c06a2d-198c-404b-afb7-0ee7678bfe8e
+      conf:
+        meta:
+          description: Student Detail API
+        requests:
+          
+          - description: GET ALL DATA
+            method: GET
+            url: https://thetestingworldapi.com/api/studentsDetails
+            extract:
+              - ID:
+                  jsonPath: $[0]["id"]
+            assert:
+              - check: ID
+
+        parameters: []
+        useCookies: true
+        authenticationHeaders: []
+      description: Student Detail API
