@@ -85,6 +85,9 @@ flows:
             - check: meta_name_viewport_in_response_body_1
             - check: meta_name_robots_in_response_body_1
             - check: meta_name_generator_in_response_body_1
+            - check: __launchedBy
+              contains: Lakshya
+            - check: link_rel
 
         - flowId: 231f6de0-2d77-457b-9bdb-fb23ab81a705
           description: TestFlow
@@ -98,6 +101,59 @@ flows:
       parameterPools:
         - 599a9c1f-ba6c-4a95-9635-f60e779ae01b
     runInCi: true
+  - id: 088939b2-388a-4f27-9a99-86e9a800a785
+    order: 1
+    conf:
+      meta:
+        description: NewEndToEnd
+      requests:
+        
+        - description: GET API
+          method: GET
+          url: https://thetestingworldapi.com/api/studentsDetails
+          extract:
+            - ID:
+                jsonPath: $[0]["id"]
+          assert:
+            - check: ID
+
+        - description: GET ID
+          method: GET
+          url: https://thetestingworldapi.com/api/studentsDetails/${ID}
+          disabled: false
+          extract:
+            - name:
+                jsonPath: $["data"]["first_name"]
+
+        - description: PUT ID
+          method: PUT
+          url: https://thetestingworldapi.com/api/studentsDetails/${ID}
+          disabled: false
+          postData:
+            text: |-
+              {
+                "id": ${ID},
+                "first_name": "${FirstName}",
+                "middle_name": "sample string 3",
+                "last_name": "sample string 4",
+                "date_of_birth": "sample string 5"
+              }
+            mimeType: application/json
+          extract:
+            - name:
+                jsonPath: $["data"]["first_name"]
+
+        - description: GET NEW ID
+          method: GET
+          url: https://thetestingworldapi.com/api/studentsDetails/${ID}
+
+        - description: DELETE ID
+          method: DELETE
+          url: https://thetestingworldapi.com/api/studentsDetails/${ID}
+
+      parameterPools:
+        - d25c0417-7b34-4989-9d52-1a4b7e972899
+    runInCi: false
 dependencies:
   login:
     id: f7e9886c-ff16-4ff5-91d7-bc1c95f5f475
